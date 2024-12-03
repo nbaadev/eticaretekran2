@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, SafeAreaView, ScrollView } from 'react-native';
 import { Home, User } from 'lucide-react-native';
+import tw from 'tailwind-react-native-classnames';
 
 // Ürünler listesi
 const products = [
@@ -32,16 +24,12 @@ export default function App() {
 
   // Ana Sayfa Ekranı
   const renderHomeScreen = () => (
-    <View style={[styles.mainContent, styles.centeredContent]}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.centeredScroll}
-      >
+    <View style={tw`flex-1 justify-center items-center`}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={tw`flex-grow justify-center items-center`}>
         {products.map((product) => (
-          <View key={product.id} style={styles.productCard}>
-            <Image source={{ uri: product.image }} style={styles.productImage} />
-            <Text style={styles.productName}>{product.name}</Text>
+          <View key={product.id} style={tw`w-48 h-72 bg-gray-100 rounded-xl p-2 items-center justify-center mx-2`}>
+            <Image source={{ uri: product.image }} style={tw`w-36 h-36 rounded-lg`} />
+            <Text style={tw`mt-2 text-lg font-bold text-center`}>{product.name}</Text>
           </View>
         ))}
       </ScrollView>
@@ -50,21 +38,21 @@ export default function App() {
 
   // Profil Ekranı
   const renderProfileScreen = () => (
-    <View style={[styles.mainContent, styles.centeredContent]}>
-      <View style={styles.profileHeader}>
-        <TouchableOpacity style={styles.profilePicture}>
+    <View style={tw`flex-1 justify-center items-center`}>
+      <View style={tw`mb-4`}>
+        <TouchableOpacity style={tw`w-24 h-24 bg-gray-200 rounded-full items-center justify-center`}>
           <User size={48} color="#666" />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.profileInfo}>
-        <Text style={styles.profileInfoTitle}>Kullanıcı Bilgileri</Text>
+      <View style={tw`bg-gray-100 rounded-xl p-4 w-11/12`}>
+        <Text style={tw`text-xl font-bold text-center mb-4`}>Kullanıcı Bilgileri</Text>
 
         {/* Ad Soyad */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Ad Soyad:</Text>
+        <View style={tw`mb-4`}>
+          <Text style={tw`text-sm font-semibold mb-2`}>Ad Soyad:</Text>
           <TextInput
-            style={styles.textInput}
+            style={tw`w-full h-12 border border-gray-300 rounded-md p-2 bg-white`}
             value={currentUser.name}
             onChangeText={(text) => updateUser('name', text)}
             placeholder="Ad Soyad"
@@ -72,10 +60,10 @@ export default function App() {
         </View>
 
         {/* E-posta */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>E-posta:</Text>
+        <View style={tw`mb-4`}>
+          <Text style={tw`text-sm font-semibold mb-2`}>E-posta:</Text>
           <TextInput
-            style={styles.textInput}
+            style={tw`w-full h-12 border border-gray-300 rounded-md p-2 bg-white`}
             value={currentUser.email}
             onChangeText={(text) => updateUser('email', text)}
             placeholder="E-posta"
@@ -84,10 +72,10 @@ export default function App() {
         </View>
 
         {/* Adres */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Adres:</Text>
+        <View style={tw`mb-4`}>
+          <Text style={tw`text-sm font-semibold mb-2`}>Adres:</Text>
           <TextInput
-            style={styles.textInput}
+            style={tw`w-full h-12 border border-gray-300 rounded-md p-2 bg-white`}
             value={currentUser.address}
             onChangeText={(text) => updateUser('address', text)}
             placeholder="Adres"
@@ -98,131 +86,33 @@ export default function App() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={tw`flex-1 bg-white`}>
       {/* İçerik Alanı */}
-      <View style={styles.mainContent}>
+      <View style={tw`flex-1`}>
         {activeTab === 'home' && renderHomeScreen()}
         {activeTab === 'profile' && renderProfileScreen()}
       </View>
 
       {/* TabBar */}
-      <View style={styles.tabBar}>
-        <TouchableOpacity
-          onPress={() => setActiveTab('home')}
-          style={[styles.tabBarItem, activeTab === 'home' && styles.tabBarItemActive]}
-        >
-          <Home size={24} color={activeTab === 'home' ? '#000' : '#666'} />
-          <Text style={styles.tabBarItemText}>Anasayfa</Text>
-        </TouchableOpacity>
+      <View style={tw`flex-row justify-between items-center bg-gray-100 h-16`}>
+  <TouchableOpacity
+    onPress={() => setActiveTab('home')}
+    style={[tw`items-center flex-1`, activeTab === 'home' && tw`opacity-100`]}
+  >
+    <Home size={24} color={activeTab === 'home' ? '#000' : '#666'} />
+    {/* Metni Text componentinin içine alıyoruz */}
+    <Text style={tw`text-xs mt-0.5`}>Anasayfa</Text>
+  </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => setActiveTab('profile')}
-          style={[styles.tabBarItem, activeTab === 'profile' && styles.tabBarItemActive]}
-        >
-          <User size={24} color={activeTab === 'profile' ? '#000' : '#666'} />
-          <Text style={styles.tabBarItemText}>Profil</Text>
-        </TouchableOpacity>
-      </View>
+  <TouchableOpacity
+    onPress={() => setActiveTab('profile')}
+    style={[tw`items-center flex-1`, activeTab === 'profile' && tw`opacity-100`]}
+  >
+    <User size={24} color={activeTab === 'profile' ? '#000' : '#666'} />
+    {/* Metni Text componentinin içine alıyoruz */}
+    <Text style={tw`text-xs mt-0.5`}>Profil</Text>
+  </TouchableOpacity>
+  </View>
     </SafeAreaView>
   );
 }
-
-// Stil Tanımları
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  mainContent: {
-    flex: 1,
-  },
-  centeredContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredScroll: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  productCard: {
-    width: 200,
-    height: 300,
-    marginHorizontal: 8,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 12,
-    padding: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  productImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 12,
-  },
-  productName: {
-    marginTop: 8,
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  profileHeader: {
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  profilePicture: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    backgroundColor: '#f2f2f2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profileInfo: {
-    backgroundColor: '#f2f2f2',
-    borderRadius: 12,
-    padding: 16,
-    width: '90%',
-  },
-  profileInfoTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  inputContainer: {
-    marginBottom: 12,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 8,
-    backgroundColor: 'white',
-  },
-  tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 64,
-    backgroundColor: '#f2f2f2',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
-  tabBarItem: {
-    alignItems: 'center',
-    opacity: 0.5,
-  },
-  tabBarItemActive: {
-    opacity: 1,
-  },
-  tabBarItemText: {
-    fontSize: 12,
-    marginTop: 4,
-  },
-});
