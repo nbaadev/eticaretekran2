@@ -23,8 +23,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
-    "@react-native-community/cli": "latest",
     "@babel/preset-env": "^7.26.0",
+    "@react-native-community/cli": "latest",
     "@types/react-native-swiper": "^1.5.10",
     "babel-preset-expo": "^12.0.2",
     "tailwindcss": "^3.4.15"
